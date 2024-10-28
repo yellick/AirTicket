@@ -8,7 +8,7 @@
       d:DesignHeight="764" d:DesignWidth="1480"
       Title="pageAuthorization">
 
-    <Grid x:Name="password">
+    <Grid>
         <Label Content="AirTicket" Height="62" Margin="0,150,0,0" VerticalAlignment="Top" FontSize="48" Foreground="White" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="261" FontWeight="Bold" FontFamily="Arial Black"/>
         <Label Content="Вход" Height="33" Margin="0,217,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="60" FontWeight="Bold"/>
 
@@ -18,7 +18,7 @@
         <Label Content="Пароль" HorizontalAlignment="Left" Margin="570,425,0,0" VerticalAlignment="Top" Foreground="White" VerticalContentAlignment="Center" Height="27" Width="100"/>
         <TextBox x:Name="passwordTB" Style="{DynamicResource TextBoxTemplate}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="340" Height="40" BorderThickness="0,0,0,0" VerticalContentAlignment="Center" FontSize="20" Background="#FF333333" Foreground="White" BorderBrush="White" Padding="10,0,0,0" Margin="0,452,0,0"/>
 
-        <Button Style="{DynamicResource ButtonTemplate}" x:Name="authBtn" Content="Войти" HorizontalAlignment="Center" Margin="0,550,0,0" VerticalAlignment="Top" Height="40" Width="140" Foreground="White" BorderBrush="White" BorderThickness="0,0,0,0" FontSize="18" Click="authBtn_Click" Focusable="False" Cursor="Hand" FontWeight="Bold">
+        <Button Style="{DynamicResource ButtonTemplate}" x:Name="authBtn" Content="Войти" HorizontalAlignment="Center" Margin="0,550,0,0" VerticalAlignment="Top" Height="40" Width="140" Foreground="White" BorderBrush="White" BorderThickness="0,0,0,0" FontSize="20" Click="authBtn_Click" Focusable="False" Cursor="Hand" FontWeight="Bold">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF5D0073" Offset="0"/>
@@ -27,7 +27,7 @@
             </Button.Background>
         </Button>
 
-        <Button Style="{DynamicResource ButtonTemplate}" x:Name="a" Content="Регистрация" HorizontalAlignment="Center" Margin="689,625,691,0" VerticalAlignment="Top" Height="25" Width="100" Foreground="White" BorderBrush="White" BorderThickness="1" FontSize="10" Focusable="False" Cursor="Hand" FontWeight="Bold" Background="#FF2C2C2C"/>
-        <Label Content="|" Height="30" Margin="710,590,710,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFA2A2A2" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="60" FontWeight="Bold"/>
+        <Label Content="|" Height="30" Margin="694,590,694,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFA2A2A2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+        <Button Style="{DynamicResource ButtonTemplate}" x:Name="regBtn" Content="Регистрация" Margin="656,625,656,0" VerticalAlignment="Top" Height="34" Foreground="White" BorderBrush="White" BorderThickness="2" FontSize="14" Focusable="False" Cursor="Hand" FontWeight="Light" Background="#FF2C2C2C" Click="regBtn_Click"/>
     </Grid>
 </Page>

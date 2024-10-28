@@ -5,10 +5,32 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AirTicket"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="764" d:DesignWidth="1480"  
       Title="pageRegistration">
 
     <Grid>
+        <Label Content="AirTicket" Height="62" Margin="0,150,0,0" VerticalAlignment="Top" FontSize="48" Foreground="White" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="261" FontWeight="Bold" FontFamily="Arial Black"/>
+        <Label Content="Вход" Height="33" Margin="0,217,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="60" FontWeight="Bold"/>
+
+        <Label Content="Логин" HorizontalAlignment="Left" Margin="570,269,0,0" VerticalAlignment="Top" Foreground="White" VerticalContentAlignment="Center" Height="27" Width="100"/>
+        <TextBox Style="{DynamicResource TextBoxTemplate}" x:Name="loginTB" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="340" Height="40" BorderThickness="0,0,0,0" VerticalContentAlignment="Center" FontSize="20" Background="#FF333333" Foreground="White" BorderBrush="White" Padding="10,0,0,0" Margin="570,296,570,428"/>
         
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="570,359,0,0" VerticalAlignment="Top" Foreground="White" VerticalContentAlignment="Center" Height="27" Width="100"/>
+        <TextBox x:Name="passwordTB" Style="{DynamicResource TextBoxTemplate}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="340" Height="40" BorderThickness="0,0,0,0" VerticalContentAlignment="Center" FontSize="20" Background="#FF333333" Foreground="White" BorderBrush="White" Padding="10,0,0,0" Margin="570,386,570,0"/>
+        
+        <Label Content="Ваше имя" HorizontalAlignment="Left" Margin="570,449,0,0" VerticalAlignment="Top" Foreground="White" VerticalContentAlignment="Center" Height="27" Width="100"/>
+        <TextBox x:Name="userNameTB" Style="{DynamicResource TextBoxTemplate}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="340" Height="40" BorderThickness="0,0,0,0" VerticalContentAlignment="Center" FontSize="20" Background="#FF333333" Foreground="White" BorderBrush="White" Padding="10,0,0,0" Margin="570,476,570,0"/>
+
+        <Button Style="{DynamicResource ButtonTemplate}" x:Name="regBtn" Content="Создать аккаунт" HorizontalAlignment="Center" Margin="640,554,640,0" VerticalAlignment="Top" Height="40" Width="200" Foreground="White" BorderBrush="White" BorderThickness="0,0,0,0" FontSize="20" Focusable="False" Cursor="Hand" FontWeight="Bold" Click="regBtn_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5D0073" Offset="0"/>
+                    <GradientStop Color="#FF122FC9" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+
+        <Label Content="|" Height="30" Margin="694,594,694,0" VerticalAlignment="Top" FontSize="20" Foreground="#FFA2A2A2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+        <Button Style="{DynamicResource ButtonTemplate}" x:Name="backBtn" Content="Назад" Margin="683,629,683,0" VerticalAlignment="Top" Height="34" Foreground="White" BorderBrush="White" BorderThickness="2" FontSize="14" Focusable="False" Cursor="Hand" FontWeight="Light" Background="#FF2C2C2C" Click="backBtn_Click"/>
     </Grid>
 </Page>

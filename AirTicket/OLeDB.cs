@@ -1,6 +1,6 @@
 ﻿using System.Data.OleDb;
 
-namespace de14
+namespace AirTicket
 {
     class OleDB
     {

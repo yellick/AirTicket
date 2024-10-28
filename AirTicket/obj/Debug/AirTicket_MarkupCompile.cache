@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 \\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\App.xaml
-31060913437
+5417130713
 
-8-701026925
+10464044795
 13-1505183044
-MainWindow.xaml;pageAuthorization.xaml;pageRegistration.xaml;
+MainWindow.xaml;pageAuthorization.xaml;pageMain.xaml;pageRegistration.xaml;ProfileWindow.xaml;
 
 False
 

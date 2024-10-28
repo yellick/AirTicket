@@ -1,5 +1,4 @@
-﻿using de14;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
@@ -26,7 +25,7 @@ namespace AirTicket
         {
             InitializeComponent();
 
-            mainFrame.Content = new pageAuthorization();
+            mainFrame.Content = new pageMain("1",this);
         }
     }
 }

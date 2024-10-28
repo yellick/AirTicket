@@ -36,3 +36,7 @@ C:\other\projects\WPF\AirTicket\AirTicket\obj\Debug\App.baml
 \\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\AirTicket.pdb
 \\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\pageRegistration.g.cs
 \\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\pageRegistration.baml
+\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\pageMain.g.cs
+\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\pageMain.baml
+\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\ProfileWindow.g.cs
+\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\ProfileWindow.baml

@@ -1,5 +1,4 @@
-﻿using de14;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
@@ -23,11 +22,15 @@ namespace AirTicket
     /// </summary>
     public partial class pageAuthorization : Page
     {
-
+        Window MW;
         OleDB db = new OleDB();
-        public pageAuthorization()
+
+        public pageAuthorization(Window mainWindow)
         {
+            mainWindow.Title = "AirTicket | Авторизация";
             InitializeComponent();
+
+            MW = mainWindow;
         }
 
         private void authBtn_Click(object sender, RoutedEventArgs e)
@@ -44,15 +47,12 @@ namespace AirTicket
                     case "a":
                         MessageBox.Show("Ошибка: неправильный логин или пароль", "Ошибка входа");
                         break;
-                    case "b":
-                        MessageBox.Show("Ошибка: несколько пользователей с одинаковыми логином и паролем", "Ошибка входа");
-                        break;
                     case "-":
                         MessageBox.Show("Ошибка: неизвестная ошибка", "Ошибка входа");
                         break;
 
                     default:
-                        MessageBox.Show("Вы успешно авторизованы!");
+                        NavigationService.Navigate(new pageMain(result, MW));
                         break;
                 }
             }
@@ -61,7 +61,6 @@ namespace AirTicket
         public string auth(string login, string pass)
         {
             OleDbDataReader data = db.Select("SELECT * FROM Users WHERE [login] = '" + login + "' AND [password] = '" + pass + "'");
-
 
             int counter = 0;
             string user_id = "";
@@ -85,14 +84,15 @@ namespace AirTicket
             {
                 return "a";
             }
-            else if (counter > 1)
-            {
-                return "b";
-            }
             else
             {
                 return "-";
             }
+        }
+
+        private void regBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new pageRegistration(MW));
         }
     }
 }
