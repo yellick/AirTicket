@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AirTicket"
         mc:Ignorable="d"
         Title="Профиль" Height="430.35" Width="400" ResizeMode="NoResize" Background="#FF3C3C3C"
-        Closing="Window_Closing">
+        Closing="Window_Closing" Icon="airplane.png">
     <Window.Resources>
         <Style x:Key="ButtonProfileTemplate" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
@@ -27,14 +27,6 @@
                             <Trigger Property="IsDefaulted" Value="true">
                                 <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                             </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
-                            </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
                                 <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
@@ -47,26 +39,26 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Label Content="Личные данные" Margin="10,30,10,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="Личные данные" Margin="10,30,214,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
         
         <Label Content="Имя:" Margin="10,68,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Left" Width="170"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,94,0,0" TextWrapping="Wrap" Text="Михаил" VerticalAlignment="Top" Width="170" Background="#FF303030" SelectionBrush="{x:Null}" Foreground="White" BorderThickness="0,0,0,1" Padding="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="14"/>
+        <TextBox x:Name="userNameTB" HorizontalAlignment="Left" Height="23" Margin="10,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170" Background="#FF303030" SelectionBrush="{x:Null}" Foreground="White" BorderThickness="0,0,0,1" Padding="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="14"/>
         
         <Label Content="Логин" Margin="0,68,10,0" Foreground="White" HorizontalAlignment="Right" Width="170" Height="26" VerticalAlignment="Top"/>
-        <TextBox Height="23" Margin="0,94,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Background="#FF303030" SelectionBrush="{x:Null}" Foreground="White" BorderThickness="0,0,0,1" Padding="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="14" HorizontalAlignment="Right" Width="170"/>
+        <TextBox x:Name="userLoginTB" Height="23" Margin="0,94,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Background="#FF303030" SelectionBrush="{x:Null}" Foreground="White" BorderThickness="0,0,0,1" Padding="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="14" HorizontalAlignment="Right" Width="170"/>
         
-        <Button Content="Сохранить" Margin="145,132,145,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="White" Foreground="White" Style="{DynamicResource ButtonProfileTemplate}" Cursor="Hand"/>
+        <Button x:Name="saveNameAndLogin" Content="Сохранить" Margin="145,132,145,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="White" Foreground="White" Style="{DynamicResource ButtonProfileTemplate}" Cursor="Hand" Click="saveNameAndLogin_Click"/>
 
         <Label Content="Изменить пароль" Margin="10,174,10,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
         
         <Label Content="Старый пароль" Margin="10,212,10,0" VerticalAlignment="Top" Foreground="White"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,238,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="374" Background="#FF303030" SelectionBrush="{x:Null}" Foreground="White" BorderThickness="0,0,0,1" Padding="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="14"/>
+        <TextBox x:Name="passwordTB" HorizontalAlignment="Left" Height="23" Margin="10,238,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="374" Background="#FF303030" SelectionBrush="{x:Null}" Foreground="White" BorderThickness="0,0,0,1" Padding="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="14"/>
         
         <Label Content="Новый пароль" Margin="10,263,10,0" VerticalAlignment="Top" Foreground="White"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,289,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="374" Background="#FF303030" SelectionBrush="{x:Null}" Foreground="White" BorderThickness="0,0,0,1" Padding="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="14"/>
+        <TextBox x:Name="newPasswordTB" HorizontalAlignment="Left" Height="23" Margin="10,289,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="374" Background="#FF303030" SelectionBrush="{x:Null}" Foreground="White" BorderThickness="0,0,0,1" Padding="0,0,0,1" VerticalContentAlignment="Bottom" FontSize="14"/>
 
-        <Button Content="Изменить" Margin="145,327,145,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="White" Foreground="White" Style="{DynamicResource ButtonProfileTemplate}" Cursor="Hand"/>
-        <Button Content="Закрыть" Margin="145,365,145,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="White" Foreground="White" Style="{DynamicResource ButtonProfileTemplate}" Cursor="Hand" Click="Button_Click"/>
+        <Button x:Name="changePassword" Content="Изменить" Margin="145,327,145,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="White" Foreground="White" Style="{DynamicResource ButtonProfileTemplate}" Cursor="Hand" Click="changePassword_Click"/>
+        <Button x:Name="closeWnBtn" Content="Закрыть" Margin="145,365,145,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="White" Foreground="White" Style="{DynamicResource ButtonProfileTemplate}" Cursor="Hand" Click="closeWnBtn_Click"/>
 
     </Grid>
 </Window>

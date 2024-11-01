@@ -55,6 +55,9 @@ namespace AirTicket
                         NavigationService.Navigate(new pageMain(result, MW));
                         break;
                 }
+            } else
+            {
+                MessageBox.Show("Заполните все поля");
             }
         }
 
