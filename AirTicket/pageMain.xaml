@@ -24,7 +24,7 @@
 
             </StackPanel>
         </Button>
-        <Frame x:Name="workSpace" Content="" Margin="10,0,0,25" Width="1445" Height="674" VerticalAlignment="Bottom" Foreground="White" BorderBrush="White" HorizontalAlignment="Left"/>
+        <Frame x:Name="workSpace" Content="" Margin="10,0,0,25" Width="1445" Height="674" VerticalAlignment="Bottom" Foreground="White" BorderBrush="White" HorizontalAlignment="Left" NavigationUIVisibility="Hidden"/>
 
 
     </Grid>
