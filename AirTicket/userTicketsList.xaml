@@ -9,7 +9,7 @@
       Title="userTicketsList">
 
     <Grid>
-        <ListView x:Name="ticketsList" Height="603" VerticalAlignment="Top" Margin="0,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource ListViewTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="{x:Null}" HorizontalAlignment="Right" Width="995">
+        <ListView x:Name="ticketsList" Height="603" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource ListViewTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="{x:Null}" SelectionChanged="ticketsList_SelectionChanged" Margin="450,0,0,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Width="995" Cursor="Hand" Background="#FF4D4D4D" Margin="0,0,0,20">
@@ -17,6 +17,8 @@
                             <RowDefinition Height="160"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
+
+                        <Label Content="{Binding flightId}"/>
 
                         <TextBlock Text="{Binding flightTB}" HorizontalAlignment="Left" Margin="20,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480" Height="30" FontSize="26" FontFamily="Calibri" FontWeight="Bold" Foreground="White"/>
                         <TextBlock Text="{Binding depTimeTB}" HorizontalAlignment="Left" Margin="500,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Height="30" FontSize="18" FontFamily="Calibri" Foreground="White"/>
@@ -37,17 +39,15 @@
 
 
         <Label Content="Аэропорт отправления" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="400" Height="35" Foreground="White" VerticalContentAlignment="Center" Padding="0" FontSize="16"/>
-        <ComboBox x:Name="placeDepTB" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="400" Height="20"/>
+        <ComboBox x:Name="placeDepCB" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="400" Height="20"/>
 
         <Label Content="Аэропорт Прибытия" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="400" Height="35" Foreground="White" VerticalContentAlignment="Center" Padding="0" FontSize="16"/>
-        <ComboBox x:Name="placeArrTB" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top" Width="400" Height="20"/>
+        <ComboBox x:Name="placeArrCB" HorizontalAlignment="Left" Margin="10,175,0,0" VerticalAlignment="Top" Width="400" Height="20"/>
 
-        <Label Content="Авиакомпания" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" Width="400" Height="35" Foreground="White" VerticalContentAlignment="Center" Padding="0" FontSize="16"/>
-        <ComboBox x:Name="Airkine" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Width="400" Height="20"/>
+        <Label Content="Дата вылета" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" Width="400" Height="34" Foreground="White" VerticalContentAlignment="Center" Padding="0" FontSize="16"/>
+        <DatePicker x:Name="dateDP" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top" Height="26" Width="200"/>
 
-        <Label Content="Дата вылета" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" Width="400" Height="35" Foreground="White" VerticalContentAlignment="Center" Padding="0" FontSize="16"/>
-        <DatePicker HorizontalAlignment="Left" Margin="10,325,0,0" VerticalAlignment="Top" Height="25" Width="200"/>
-
-        <Button Content="Поиск билетов" HorizontalAlignment="Left" Height="30" Margin="10,370,0,0" VerticalAlignment="Top" Width="200"/>
+        <Button x:Name="filteringTickets" Content="Поиск билетов" HorizontalAlignment="Left" Height="30" Margin="10,300,0,0" VerticalAlignment="Top" Width="200" Click="filteringTickets_Click"/>
+        <Button x:Name="clearForm" Content="Отчистить" HorizontalAlignment="Left" Height="30" Margin="260,300,0,0" VerticalAlignment="Top" Width="100" Click="clearForm_Click"/>
     </Grid>
 </Page>

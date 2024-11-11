@@ -44,3 +44,5 @@ C:\other\projects\WPF\AirTicket\AirTicket\obj\Debug\App.baml
 \\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\WSUser.baml
 \\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\userTicketsList.g.cs
 \\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\userTicketsList.baml
+\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\pageFlightDetail.g.cs
+\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\pageFlightDetail.baml

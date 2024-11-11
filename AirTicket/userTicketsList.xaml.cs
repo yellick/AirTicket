@@ -22,33 +22,34 @@ namespace AirTicket
     public partial class userTicketsList : Page
     {
         OleDB db = new OleDB();
+        SQL sql = new SQL();
 
         public userTicketsList()
         {
             InitializeComponent();
-            uploadDataOnList();
+
+            uploadDataOnList(sql.defaultSqlTicketsList);
+            setComboBox(sql.getCityesData);
         }
 
-        private void uploadDataOnList()
+        private void setComboBox(string sqlCity)
         {
-            OleDbDataReader data = db.Select("SELECT " +
-                                                "Flights.flight_id, " +
-                                                "Flights.place_departurete, " +
-                                                "Flights.place_arrival, " +
-                                                "Flights.flight_date, " +
-                                                "Flights.flight_time, " +
-                                                "Airlines.airline_name, " +
-                                                "Planes.boarding_a, " +
-                                                "Planes.boarding_a_ratio, " +
-                                                "Planes.boarding_b, " +
-                                                "Planes.boarding_b_ratio, " +
-                                                "Planes.boarding_c, " +
-                                                "Planes.boarding_c_ratio, " +
-                                                "Planes.boarding_d, " +
-                                                "Planes.boarding_d_ratio " +
-                                             "FROM " +
-                                                "(Flights INNER JOIN Planes ON Flights.plane_id = Planes.plane_id) " +
-                                                "INNER JOIN Airlines ON Planes.airline_id = Airlines.airline_id");
+            OleDbDataReader cityes = db.Select(sqlCity);
+            while (cityes.Read())
+            {
+                string id = cityes.GetValue(0) + "",
+                       name = cityes.GetValue(1) + "";
+
+                placeDepCB.Items.Add(new CBData { Id = id, Name = name });
+                placeArrCB.Items.Add(new CBData { Id = id, Name = name });
+            }
+        }
+
+        private void uploadDataOnList(string sql)
+        {
+            ticketsList.Items.Clear();
+
+            OleDbDataReader data = db.Select(sql);
 
             while (data.Read())
             {
@@ -87,7 +88,8 @@ namespace AirTicket
                 }
 
 
-                string flight = depCity + " - " + arrCity,
+                string flightId = data.GetValue(0) + "",
+                       flight = depCity + " - " + arrCity,
                        depTime = "Вылет: " + conctructDateTimeFromAccess(data.GetValue(3)+"", data.GetValue(4)+""),
                        flightTime = "Примерное время в пути - " + calcTravelTime(dcx, dcy, acx, acy),
                        airlineName = "Авиакомпания: " + data.GetValue(5),
@@ -97,7 +99,7 @@ namespace AirTicket
                        boardingD = "Эконом: " + data.GetValue(12);
 
 
-                ticketsList.Items.Add(new columnsData { flightTB = flight, depTimeTB = depTime, flightTimeTB = flightTime, airlineNameTB = airlineName, boardingATB = boardingA, boardingBTB = boardingB, boardingCTB = boardingC, boardingDTB = boardingD });
+                ticketsList.Items.Add(new columnsData { flightID = flightId, flightTB = flight, depTimeTB = depTime, flightTimeTB = flightTime, airlineNameTB = airlineName, boardingATB = boardingA, boardingBTB = boardingB, boardingCTB = boardingC, boardingDTB = boardingD });
 
             }
         }
@@ -121,10 +123,100 @@ namespace AirTicket
             time = time.Substring(11);
             return date + " - " + time;
         }
+
+        private void filteringTickets_Click(object sender, RoutedEventArgs e)
+        {
+            string placeDep = placeDepCB.Text,
+                   placeArr = placeArrCB.Text,
+                   flightDate = dateDP.Text.Replace('.', '-'),
+                   additionString = "";
+            
+            bool addWhere = false;
+
+            int counter = 0;
+
+            if (!String.IsNullOrEmpty(placeDep) && !String.IsNullOrEmpty(placeArr) && !String.IsNullOrEmpty(flightDate)) { }
+
+            if (!String.IsNullOrEmpty(placeDep))
+            {
+                placeDep = " place_departurete = " + placeDep.Split('-')[0].Split(' ')[0];
+                addWhere = true;
+                counter++;
+            } else { placeDep = ""; }
+
+            if (!String.IsNullOrEmpty(placeArr))
+            {
+                placeArr = " place_arrival = " + placeArr.Split('-')[0].Split(' ')[0];
+                addWhere = true;
+                counter++;
+            } else { placeArr = ""; }
+
+            if (!String.IsNullOrEmpty(flightDate))
+            {
+                flightDate = " flight_date = #"  + flightDate + "#";
+                addWhere = true;
+                counter++;
+            }
+            else { flightDate = ""; }
+
+            if (addWhere)
+            {
+                additionString += "WHERE" + placeDep;
+                if (counter > 1) { additionString += " AND"; }
+                additionString += placeArr;
+                if (counter > 2) { additionString += " AND"; }
+                additionString += flightDate;
+            }
+            
+            uploadDataOnList(sql.defaultSqlTicketsList + additionString);
+        }
+
+        private void clearForm_Click(object sender, RoutedEventArgs e)
+        {
+            placeDepCB.SelectedIndex = -1;
+            placeArrCB.SelectedIndex = -1;
+            dateDP.Text = "";
+            ticketsList.SelectedItem = null;
+        }
+        
+        private void ticketsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = ticketsList.SelectedItem as columnsData;
+            if (selectedItem != null)
+            {
+                string flightId = selectedItem.flightID;
+                NavigationService.Navigate(new pageFlightDetail(flightId));
+            }
+        }
+    }
+
+    public class SQL
+    {
+        public string defaultSqlTicketsList = "SELECT " +
+                                                "Flights.flight_id, " +
+                                                "Flights.place_departurete, " +
+                                                "Flights.place_arrival, " +
+                                                "Flights.flight_date, " +
+                                                "Flights.flight_time, " +
+                                                "Airlines.airline_name, " +
+                                                "Planes.boarding_a, " +
+                                                "Planes.boarding_a_ratio, " +
+                                                "Planes.boarding_b, " +
+                                                "Planes.boarding_b_ratio, " +
+                                                "Planes.boarding_c, " +
+                                                "Planes.boarding_c_ratio, " +
+                                                "Planes.boarding_d, " +
+                                                "Planes.boarding_d_ratio " +
+                                              "FROM " +
+                                                "(Flights INNER JOIN Planes ON Flights.plane_id = Planes.plane_id) " +
+                                                "INNER JOIN Airlines ON Planes.airline_id = Airlines.airline_id ";
+
+        public string getCityesData = "SELECT airport_id, city_name FROM Airports";
     }
 
     public class columnsData
     {
+        public string flightID { get; set; }
         public string flightTB { get; set; }
         public string depTimeTB { get; set; }
         public string flightTimeTB { get; set; }
@@ -133,5 +225,12 @@ namespace AirTicket
         public string boardingBTB { get; set; }
         public string boardingCTB { get; set; }
         public string boardingDTB { get; set; }
+    }
+
+    public class CBData
+    {
+        public string Name { get; set; }
+        public string Id { get; set; }
+        public override string ToString() => $"{Id} - {Name}";
     }
 }
