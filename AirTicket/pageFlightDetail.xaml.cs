@@ -29,6 +29,7 @@ namespace AirTicket
             setFlightData(flightId);
         }
 
+
         private void setFlightData(string flightId)
         {
             SQL sql = new SQL();
@@ -54,20 +55,35 @@ namespace AirTicket
                 }
 
                 // определение даты вылета и времени в пути
-
                 flightTimeTB.Content = "Дата вылета: " + conctructDateTimeFromAccess(data.GetValue(3) + "", data.GetValue(4) + "");
-                timeToTravelTB.Content = calcTravelTime(dcx, dcy, acx, acy);
+
+                string timeTravel = calcTravelTime(dcx, dcy, acx, acy);
+                timeToTravelTB.Content = "Примерное время в пути: " + timeTravel;
 
                 // определение информации про самолёт
                 airlineTB.Content = "Авиакомпания: " + data.GetValue(5) + " мест";
                 boardingATB.Content = "1-Класс: " + data.GetValue(6) + " мест";
+                calcPrice(timeTravel, data.GetValue(7) + "");
                 boardingBTB.Content = "Бизнес: " + data.GetValue(8) + " мест";
                 boardingCTB.Content = "Комфорт: " + data.GetValue(10) + " мест";
                 boardingDTB.Content = "Эконом: " + data.GetValue(12) + " мест";
             }
         }
 
-        private void calcFlightPrice() {   }
+        private double calcPrice (string tt, string ratio)
+        {
+            string[] ttArr = tt.Split(':');
+
+            double cost = 0,
+                   ratioFloat = Convert.ToDouble(ratio.Replace(',', '.'));
+
+            int minutes = (Convert.ToInt32(ttArr[0]) * 60) + Convert.ToInt32(ttArr[1]);
+
+            cost = minutes;
+
+            MessageBox.Show(Convert.ToString(minutes));
+            return cost;
+        }
 
         private string calcTravelTime(int dcx, int dcy, int acx, int acy)
         {
@@ -78,7 +94,7 @@ namespace AirTicket
             hours = distanse / 700;
             minutes = 60 * (hours % 1);
 
-            string tt = Math.Truncate(hours) + " час, " + Math.Truncate(minutes) + " минут";
+            string tt = Math.Truncate(hours) + ":" + Math.Truncate(minutes);
             return tt;
         }
 
