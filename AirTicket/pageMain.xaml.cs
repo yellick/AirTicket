@@ -45,7 +45,7 @@ namespace AirTicket
             switch (u_role)
             {
                 case "1":
-                    workSpace.Content = new WSUser();
+                    workSpace.Content = new WSUser(u_id);
                     break;
 
                 case "2":

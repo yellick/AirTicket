@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BookTicketWindow.xaml.cs">
+      <DependentUpon>BookTicketWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pageFlightDetail.xaml.cs">
       <DependentUpon>pageFlightDetail.xaml</DependentUpon>
     </Compile>
@@ -64,6 +67,10 @@
     <Compile Include="WSUser.xaml.cs">
       <DependentUpon>WSUser.xaml</DependentUpon>
     </Compile>
+    <Page Include="BookTicketWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -21,48 +21,50 @@ namespace AirTicket
     public partial class WSUser : Page
     {
         BrushConverter bc = new BrushConverter();
+        public string u_id;
 
-        public WSUser()
+        public WSUser(string user_id)
         {
             InitializeComponent();
-            openTicketsList();
+            openTicketsList(user_id);
+            u_id = user_id;
         }
 
         private void ticketsListBtn_Click(object sender, RoutedEventArgs e)
         {
             changeBtnColor(ticketsListBtn, "#FF80C0FF");
             changeBtnColor(bookedTicketsBtn, "#FFFFFF");
-            changeBtnColor(bookingHistoryBtn, "#FFFFFF");
+            //changeBtnColor(bookingHistoryBtn, "#FFFFFF");
 
-            openTicketsList();
+            openTicketsList(u_id);
         }
 
         private void bookedTicketsBtn_Click(object sender, RoutedEventArgs e)
         {
             changeBtnColor(ticketsListBtn, "#FFFFFF");
             changeBtnColor(bookedTicketsBtn, "#FF80C0FF");
-            changeBtnColor(bookingHistoryBtn, "#FFFFFF");
+            //changeBtnColor(bookingHistoryBtn, "#FFFFFF");
 
             openBookedTickets();
         }
 
-        private void bookingHistoryBtn_Click(object sender, RoutedEventArgs e)
+        /*private void bookingHistoryBtn_Click(object sender, RoutedEventArgs e)
         {
             changeBtnColor(ticketsListBtn, "#FFFFFF");
             changeBtnColor(bookedTicketsBtn, "#FFFFFF");
-            changeBtnColor(bookingHistoryBtn, "#FF80C0FF");
+            //changeBtnColor(bookingHistoryBtn, "#FF80C0FF");
 
             openBookingHistory();
-        }
+        }*/
 
         private void changeBtnColor(Button btn, string color)
         {
             btn.Foreground = (Brush)bc.ConvertFrom(color);
         }
 
-        private void openTicketsList()
+        private void openTicketsList(string user_id)
         {
-            userWSFrame.Content = new userTicketsList();
+            userWSFrame.Content = new userTicketsList(user_id);
         }
 
         private void openBookedTickets()

@@ -22,11 +22,15 @@ namespace AirTicket
     public partial class pageFlightDetail : Page
     {
         OleDB db = new OleDB();
+        private string FlightId,
+                       u_id;
 
-        public pageFlightDetail(string flightId)
+        public pageFlightDetail(string flightId, string user_id)
         {
             InitializeComponent();
             setFlightData(flightId);
+            FlightId = flightId;
+            u_id = user_id;
         }
 
 
@@ -42,14 +46,14 @@ namespace AirTicket
                 OleDbDataReader dc = db.Select("SELECT * FROM Airports WHERE airport_id = " + data.GetValue(1));
                 while (dc.Read())
                 {
-                    placeDepTB.Content = dc.GetValue(1);
+                    placeDepTB.Content = "Место вылета - " + dc.GetValue(1);
                     dcx = Convert.ToInt32(dc.GetValue(2) + "");
                     dcy = Convert.ToInt32(dc.GetValue(3) + "");
                 }
                 OleDbDataReader ac = db.Select("SELECT * FROM Airports WHERE airport_id = " + data.GetValue(2));
                 while (ac.Read())
                 {
-                    placeArrTB.Content = ac.GetValue(1);
+                    placeArrTB.Content = "Место прибытия - " + ac.GetValue(1);
                     acx = Convert.ToInt32(ac.GetValue(2) + "");
                     acy = Convert.ToInt32(ac.GetValue(3) + "");
                 }
@@ -60,29 +64,58 @@ namespace AirTicket
                 string timeTravel = calcTravelTime(dcx, dcy, acx, acy);
                 timeToTravelTB.Content = "Примерное время в пути: " + timeTravel;
 
+
+                int sitsCount = Convert.ToInt32(data.GetValue(6)) +
+                                Convert.ToInt32(data.GetValue(8)) + 
+                                Convert.ToInt32(data.GetValue(10)) + 
+                                Convert.ToInt32(data.GetValue(12));
+
+
                 // определение информации про самолёт
-                airlineTB.Content = "Авиакомпания: " + data.GetValue(5) + " мест";
-                boardingATB.Content = "1-Класс: " + data.GetValue(6) + " мест";
-                calcPrice(timeTravel, data.GetValue(7) + "");
-                boardingBTB.Content = "Бизнес: " + data.GetValue(8) + " мест";
-                boardingCTB.Content = "Комфорт: " + data.GetValue(10) + " мест";
-                boardingDTB.Content = "Эконом: " + data.GetValue(12) + " мест";
+                double[] coefficients = new double[4];
+
+                // Присваивание значений элементам массива
+                coefficients[0] = double.Parse(data.GetValue(7) + "");
+                coefficients[1] = double.Parse(data.GetValue(9) + "");
+                coefficients[2] = double.Parse(data.GetValue(11) + "");
+                coefficients[3] = double.Parse(data.GetValue(13) + "");
+
+                double[] prices = calcPrice(timeTravel, coefficients, sitsCount);
+
+                airlineTB.Content = "Авиакомпания: " + data.GetValue(5);
+                boardingATB.Content += data.GetValue(6) + " мест";
+                costATB.Content = "Стоимость - " + Math.Round(prices[0]) + " руб.";
+
+                boardingBTB.Content += data.GetValue(8) + " мест";
+                costBTB.Content = "Стоимость - " + Math.Round(prices[1]) + " руб.";
+
+                boardingCTB.Content += data.GetValue(10) + " мест";
+                costCTB.Content = "Стоимость - " + Math.Round(prices[2]) + " руб.";
+
+                boardingDTB.Content += data.GetValue(12) + " мест";
+                costDTB.Content = "Стоимость - " + Math.Round(prices[3]) + " руб.";
+
             }
         }
 
-        private double calcPrice (string tt, string ratio)
+        private double[] calcPrice (string tt, double[] ratio, int sitsCount)
         {
+            const int MinutePlaneFlightCost = 50000; //в рублях
+
             string[] ttArr = tt.Split(':');
-
-            double cost = 0,
-                   ratioFloat = Convert.ToDouble(ratio.Replace(',', '.'));
-
             int minutes = (Convert.ToInt32(ttArr[0]) * 60) + Convert.ToInt32(ttArr[1]);
 
-            cost = minutes;
+            double[] prices = new double[4];
 
-            MessageBox.Show(Convert.ToString(minutes));
-            return cost;
+            for (int i = 0; i < ratio.Length; i++)
+            {
+                double flightPrice = minutes * MinutePlaneFlightCost * 1.05,
+                       ratioDouble = ratio[i];
+
+                prices[i] = (flightPrice / sitsCount) * ratioDouble;
+            }
+
+            return prices;
         }
 
         private string calcTravelTime(int dcx, int dcy, int acx, int acy)
@@ -104,9 +137,23 @@ namespace AirTicket
             time = time.Substring(11);
             return date + " - " + time;
         }
+        
         private void goBackBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void bookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OleDbDataReader flights =  db.Select("SELECT bh_id FROM Booking_history WHERE flight_id = " + FlightId + " AND user_id = " + u_id);
+            while (flights.Read())
+            {
+                MessageBox.Show("Вы уже забронировали билет на этот рейс");
+                return;
+            }
+
+            Window bookWin = new BookTicketWindow(u_id, FlightId);
+            bookWin.Show();
         }
     }
 }

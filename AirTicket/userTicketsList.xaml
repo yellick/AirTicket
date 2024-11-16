@@ -9,7 +9,7 @@
       Title="userTicketsList">
 
     <Grid>
-        <ListView x:Name="ticketsList" Height="603" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource ListViewTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="{x:Null}" SelectionChanged="ticketsList_SelectionChanged" Margin="450,0,0,0">
+        <ListView x:Name="ticketsList" Height="603" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource ListViewTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="{x:Null}" MouseDoubleClick="ticketsList_MouseDoubleClick" Margin="450,0,0,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Width="995" Cursor="Hand" Background="#FF4D4D4D" Margin="0,0,0,20">

@@ -24,9 +24,13 @@ namespace AirTicket
         OleDB db = new OleDB();
         SQL sql = new SQL();
 
-        public userTicketsList()
+        string u_id;
+
+        public userTicketsList(string user_id)
         {
             InitializeComponent();
+
+            u_id = user_id;
 
             uploadDataOnList(sql.defaultSqlTicketsList);
             setComboBox(sql.getCityesData);
@@ -179,13 +183,13 @@ namespace AirTicket
             ticketsList.SelectedItem = null;
         }
         
-        private void ticketsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ticketsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = ticketsList.SelectedItem as columnsData;
             if (selectedItem != null)
             {
                 string flightId = selectedItem.flightID;
-                NavigationService.Navigate(new pageFlightDetail(flightId));
+                NavigationService.Navigate(new pageFlightDetail(flightId, u_id));
             }
         }
     }
