@@ -36,7 +36,6 @@ namespace AirTicket
         private void setFlightData()
         {
             List<string> values = getValues(flightId);
-            setComboBoxData();
             
             string placeDep = values[0],
                    placeArr = values[1],
@@ -60,6 +59,8 @@ namespace AirTicket
                    planeBoardingD = values[11],
                    planeBoardingDRatio = values[12];
 
+            setComboBoxData(airlineId, placeDep, placeArr);
+
             airlineIdTB.Content = airlineId;
             planeIdTB.Content = planeId;
 
@@ -79,19 +80,36 @@ namespace AirTicket
             ratioDTB.Text = planeBoardingDRatio;
         }
 
-        private void setComboBoxData()
+        private void setComboBoxData(string curAirlineId, string curDepId, string curArrId)
         {
+            int index = 0;
+
             OleDbDataReader cityes = db.Select("SELECT * FROM airports");
             while (cityes.Read())
             {
-                placeDepCB.Items.Add(new CBData { Id = cityes.GetValue(0) + "", Name = cityes.GetValue(1) + "" });
-                placeArrCB.Items.Add(new CBData { Id = cityes.GetValue(0) + "", Name = cityes.GetValue(1) + "" });
+                string id = cityes.GetValue(0) + "",
+                       name = cityes.GetValue(1) + "";
+
+                placeDepCB.Items.Add(new CBData { Id = id, Name = name });
+                placeArrCB.Items.Add(new CBData { Id = id, Name = name });
+
+                if (id == curDepId) { placeDepCB.SelectedIndex = index; }
+                if (id == curArrId) { placeArrCB.SelectedIndex = index; }
+
+                index++;
             }
+            index = 0;
 
             OleDbDataReader airlines = db.Select("SELECT * FROM airlines");
             while (airlines.Read())
             {
-                airlineCB.Items.Add(new CBData { Id = airlines.GetValue(0) + "", Name = airlines.GetValue(1) + "" });
+                string id = airlines.GetValue(0) + "",
+                       name = airlines.GetValue(1) + "";
+
+                airlineCB.Items.Add(new CBData { Id = id, Name = name });
+
+                if (id == curAirlineId) { airlineCB.SelectedIndex = index; }
+                index++;
             }
         }
 
@@ -144,6 +162,17 @@ namespace AirTicket
         private void goBackBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void changeFlight_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Вы уверены что сохранить изменения?\nВозврат данных будет невозможен",
+                       "Сохранить изменения?",
+                       MessageBoxButton.YesNo,
+                       MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                MessageBox.Show("pass");
+            }
         }
     }
 }

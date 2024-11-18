@@ -63,6 +63,7 @@ namespace AirTicket
                 flightTimeTB.Content = "Дата вылета: " + gm.getDate(data.GetValue(3) + "")+" - "+gm.getDate(data.GetValue(4) + "");
 
                 string timeTravel = gm.calcTravelTime(dcx, dcy, acx, acy);
+                timeTravel = $"{timeTravel.Split(' ')[0]}:{timeTravel.Split(' ')[2]}";
                 timeToTravelTB.Content = "Примерное время в пути: " + timeTravel;
 
 
