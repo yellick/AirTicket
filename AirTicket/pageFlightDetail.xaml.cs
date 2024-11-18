@@ -21,6 +21,7 @@ namespace AirTicket
     /// </summary>
     public partial class pageFlightDetail : Page
     {
+        GeneralMethods gm = new GeneralMethods();
         OleDB db = new OleDB();
         private string FlightId,
                        u_id;
@@ -59,9 +60,9 @@ namespace AirTicket
                 }
 
                 // определение даты вылета и времени в пути
-                flightTimeTB.Content = "Дата вылета: " + conctructDateTimeFromAccess(data.GetValue(3) + "", data.GetValue(4) + "");
+                flightTimeTB.Content = "Дата вылета: " + gm.getDate(data.GetValue(3) + "")+" - "+gm.getDate(data.GetValue(4) + "");
 
-                string timeTravel = calcTravelTime(dcx, dcy, acx, acy);
+                string timeTravel = gm.calcTravelTime(dcx, dcy, acx, acy);
                 timeToTravelTB.Content = "Примерное время в пути: " + timeTravel;
 
 
@@ -117,27 +118,7 @@ namespace AirTicket
 
             return prices;
         }
-
-        private string calcTravelTime(int dcx, int dcy, int acx, int acy)
-        {
-            decimal minutes,
-                    hours = 0,
-                    distanse = Convert.ToDecimal(Math.Sqrt(Math.Pow(acx - dcx, 2) + Math.Pow(acy - dcy, 2)) * 10);
-
-            hours = distanse / 700;
-            minutes = 60 * (hours % 1);
-
-            string tt = Math.Truncate(hours) + ":" + Math.Truncate(minutes);
-            return tt;
-        }
-
-        private string conctructDateTimeFromAccess(string date, string time)
-        {
-            date = date.Substring(0, date.Length - 9);
-            time = time.Substring(11);
-            return date + " - " + time;
-        }
-        
+                
         private void goBackBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();

@@ -45,7 +45,7 @@ namespace AirTicket
             changeBtnColor(bookedTicketsBtn, "#FF80C0FF");
             //changeBtnColor(bookingHistoryBtn, "#FFFFFF");
 
-            openBookedTickets();
+            openBookedTickets(u_id);
         }
 
         /*private void bookingHistoryBtn_Click(object sender, RoutedEventArgs e)
@@ -67,9 +67,9 @@ namespace AirTicket
             userWSFrame.Content = new userTicketsList(user_id);
         }
 
-        private void openBookedTickets()
+        private void openBookedTickets(string user_id)
         {
-            userWSFrame.Content = "";
+            userWSFrame.Content = new pageUserBookingTickets(user_id);
         }
 
         private void openBookingHistory()

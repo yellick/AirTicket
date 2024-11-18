@@ -17,20 +17,20 @@ using System.Windows.Shapes;
 namespace AirTicket
 {
     /// <summary>
-    /// Логика взаимодействия для userTicketsList.xaml
+    /// Логика взаимодействия для WSManager.xaml
     /// </summary>
-    public partial class userTicketsList : Page
+    public partial class WSManager : Page
     {
         OleDB db = new OleDB();
         SQL sql = new SQL();
+        GeneralMethods gm = new GeneralMethods();
+        Window MW;
 
-        string u_id;
-
-        public userTicketsList(string user_id)
+        public WSManager(Window mainWindow)
         {
             InitializeComponent();
+            MW = mainWindow;
 
-            u_id = user_id;
 
             uploadDataOnList(sql.defaultSqlTicketsList);
             setComboBox(sql.getCityesData);
@@ -94,8 +94,8 @@ namespace AirTicket
 
                 string flightId = data.GetValue(0) + "",
                        flight = depCity + " - " + arrCity,
-                       depTime = "Вылет: " + conctructDateTimeFromAccess(data.GetValue(3)+"", data.GetValue(4)+""),
-                       flightTime = "Примерное время в пути - " + calcTravelTime(dcx, dcy, acx, acy),
+                       depTime = "Вылет: " + gm.getDate(data.GetValue(3) + "") + " - " + gm.getDate(data.GetValue(4) + ""),
+                       flightTime = "Примерное время в пути - " + gm.calcTravelTime(dcx, dcy, acx, acy),
                        airlineName = "Авиакомпания: " + data.GetValue(5),
                        boardingA = "1-Класс: " + data.GetValue(6),
                        boardingB = "Бизнес: " + data.GetValue(8),
@@ -107,26 +107,7 @@ namespace AirTicket
 
             }
         }
-
-        private string calcTravelTime(int dcx, int dcy, int acx, int acy)
-        {
-            decimal minutes,
-                    hours = 0,
-                    distanse = Convert.ToDecimal(Math.Sqrt(Math.Pow(acx - dcx, 2) + Math.Pow(acy - dcy, 2)) * 10);
-
-            hours = distanse / 700;
-            minutes = 60 * (hours % 1);
-
-            string tt = Math.Truncate(hours) + " час, " + Math.Truncate(minutes) + " минут";
-            return tt;
-        }
-
-        private string conctructDateTimeFromAccess(string date, string time)
-        {
-            date = date.Substring(0, date.Length - 9);
-            time = time.Substring(11);
-            return date + " - " + time;
-        }
+        
 
         private void filteringTickets_Click(object sender, RoutedEventArgs e)
         {
@@ -134,7 +115,7 @@ namespace AirTicket
                    placeArr = placeArrCB.Text,
                    flightDate = dateDP.Text.Replace('.', '-'),
                    additionString = "";
-            
+
             bool addWhere = false;
 
             int counter = 0;
@@ -146,18 +127,20 @@ namespace AirTicket
                 placeDep = " place_departurete = " + placeDep.Split('-')[0].Split(' ')[0];
                 addWhere = true;
                 counter++;
-            } else { placeDep = ""; }
+            }
+            else { placeDep = ""; }
 
             if (!String.IsNullOrEmpty(placeArr))
             {
                 placeArr = " place_arrival = " + placeArr.Split('-')[0].Split(' ')[0];
                 addWhere = true;
                 counter++;
-            } else { placeArr = ""; }
+            }
+            else { placeArr = ""; }
 
             if (!String.IsNullOrEmpty(flightDate))
             {
-                flightDate = " flight_date = #"  + flightDate + "#";
+                flightDate = " flight_date = #" + flightDate + "#";
                 addWhere = true;
                 counter++;
             }
@@ -171,7 +154,7 @@ namespace AirTicket
                 if (counter > 2) { additionString += " AND"; }
                 additionString += flightDate;
             }
-            
+
             uploadDataOnList(sql.defaultSqlTicketsList + additionString);
         }
 
@@ -182,52 +165,15 @@ namespace AirTicket
             dateDP.Text = "";
             ticketsList.SelectedItem = null;
         }
-        
+
         private void ticketsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = ticketsList.SelectedItem as columnsData;
             if (selectedItem != null)
             {
                 string flightId = selectedItem.flightID;
-                NavigationService.Navigate(new pageFlightDetail(flightId, u_id));
+                NavigationService.Navigate(new pageChangeFlight(flightId));
             }
         }
-    }
-
-    public class SQL
-    {
-        public string defaultSqlTicketsList = "SELECT " +
-                                                "Flights.flight_id, " +
-                                                "Flights.place_departurete, " +
-                                                "Flights.place_arrival, " +
-                                                "Flights.flight_date, " +
-                                                "Flights.flight_time, " +
-                                                "Airlines.airline_name, " +
-                                                "Planes.boarding_a, " +
-                                                "Planes.boarding_a_ratio, " +
-                                                "Planes.boarding_b, " +
-                                                "Planes.boarding_b_ratio, " +
-                                                "Planes.boarding_c, " +
-                                                "Planes.boarding_c_ratio, " +
-                                                "Planes.boarding_d, " +
-                                                "Planes.boarding_d_ratio " +
-                                              "FROM " +
-                                                "(Flights INNER JOIN Planes ON Flights.plane_id = Planes.plane_id) " +
-                                                "INNER JOIN Airlines ON Planes.airline_id = Airlines.airline_id ";
-
-        public string getCityesData = "SELECT airport_id, city_name FROM Airports";
-    }
-
-    public class columnsData
-    {
-        public string flightID { get; set; }
-        public string flightTB { get; set; }
-        public string depTimeTB { get; set; }
-        public string flightTimeTB { get; set; }
-        public string airlineNameTB { get; set; }
-        public string boardingATB { get; set; }
-        public string boardingBTB { get; set; }
-        public string boardingCTB { get; set; }
-        public string boardingDTB { get; set; }
     }
 }

@@ -58,11 +58,21 @@
     <Compile Include="BookTicketWindow.xaml.cs">
       <DependentUpon>BookTicketWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GeneralMethods.cs" />
+    <Compile Include="pageChangeFlight.xaml.cs">
+      <DependentUpon>pageChangeFlight.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pageFlightDetail.xaml.cs">
       <DependentUpon>pageFlightDetail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pageUserBookingTickets.xaml.cs">
+      <DependentUpon>pageUserBookingTickets.xaml</DependentUpon>
+    </Compile>
     <Compile Include="userTicketsList.xaml.cs">
       <DependentUpon>userTicketsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WSManager.xaml.cs">
+      <DependentUpon>WSManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="WSUser.xaml.cs">
       <DependentUpon>WSUser.xaml</DependentUpon>
@@ -88,6 +98,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="pageChangeFlight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="pageFlightDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,11 +114,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="pageUserBookingTickets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProfileWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="userTicketsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WSManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

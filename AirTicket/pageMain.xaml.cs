@@ -49,9 +49,12 @@ namespace AirTicket
                     break;
 
                 case "2":
+                    workSpace.Content = new WSManager(MW);
+                    userName.Content += " (Менеджер)";
                     break;
 
                 case "3":
+                    userName.Content += " (Администратор)";
                     break;
 
                 default:
