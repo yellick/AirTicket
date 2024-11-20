@@ -1,6 +1,16 @@
 ﻿
-
-F\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\BookTicketWindow.xaml;;
-F\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\pageFlightDetail.xaml;;
-F\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\userTicketsList.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\App.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\BookTicketWindow.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\MainWindow.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\pageAddFlight.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\pageAuthorization.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\pageChangeFlight.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\pageFlightDetail.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\pageMain.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\pageRegistration.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\pageUserBookingTickets.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\ProfileWindow.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\userTicketsList.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\WSManager.xaml;;
+FC:\other\projects\WPF\AirTicket\AirTicket\WSUser.xaml;;
 

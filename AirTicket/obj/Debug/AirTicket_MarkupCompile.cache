@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\obj\Debug\
+C:\other\projects\WPF\AirTicket\AirTicket\obj\Debug\
 AirTicket
 none
 false
 DEBUG;TRACE
-\\edu.local\public\studenthomes\22201003\Desktop\AirTicket\AirTicket\App.xaml
-91284040088
+C:\other\projects\WPF\AirTicket\AirTicket\App.xaml
+13-249769886
 
-14-508769323
-13-1505183044
-BookTicketWindow.xaml;MainWindow.xaml;pageAuthorization.xaml;pageFlightDetail.xaml;pageMain.xaml;pageRegistration.xaml;ProfileWindow.xaml;userTicketsList.xaml;WSUser.xaml;
+19-730687338
+13-1310406943
+BookTicketWindow.xaml;MainWindow.xaml;pageAddFlight.xaml;pageAuthorization.xaml;pageChangeFlight.xaml;pageFlightDetail.xaml;pageMain.xaml;pageRegistration.xaml;pageUserBookingTickets.xaml;ProfileWindow.xaml;userTicketsList.xaml;WSManager.xaml;WSUser.xaml;
 
 False
 
