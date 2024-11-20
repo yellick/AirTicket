@@ -59,6 +59,9 @@
       <DependentUpon>BookTicketWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GeneralMethods.cs" />
+    <Compile Include="pageAddFlight.xaml.cs">
+      <DependentUpon>pageAddFlight.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pageChangeFlight.xaml.cs">
       <DependentUpon>pageChangeFlight.xaml</DependentUpon>
     </Compile>
@@ -94,6 +97,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="pageAddFlight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="pageAuthorization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

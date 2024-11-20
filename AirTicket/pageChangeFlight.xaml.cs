@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace AirTicket
 {
@@ -24,6 +26,7 @@ namespace AirTicket
         GeneralMethods gm = new GeneralMethods();
         OleDB db = new OleDB();
         private string flightId;
+        private int selectionCounter = 0;
 
         public pageChangeFlight(string f_id)
         {
@@ -36,51 +39,21 @@ namespace AirTicket
         private void setFlightData()
         {
             List<string> values = getValues(flightId);
-            
+
             string placeDep = values[0],
                    placeArr = values[1],
                    flightDate = gm.getDate(values[2]),
                    flightTime = gm.getTime(values[3]),
 
                    airlineId = values[13],
-                   airlineName = values[4],
+                   planeId = values[14];
 
-                   planeId = values[14],
+            setComboBoxData(airlineId, placeDep, placeArr, planeId);
 
-                   planeBoardingA = values[5],
-                   planeBoardingARatio = values[6],
-
-                   planeBoardingB = values[7],
-                   planeBoardingBRatio = values[8],
-
-                   planeBoardingC = values[9],
-                   planeBoardingCRatio = values[10],
-
-                   planeBoardingD = values[11],
-                   planeBoardingDRatio = values[12];
-
-            setComboBoxData(airlineId, placeDep, placeArr);
-
-            airlineIdTB.Content = airlineId;
-            planeIdTB.Content = planeId;
-
-            flightDateDP.Text = flightDate;
-            flightTimeTB.Text = flightTime;
-
-            boardingATB.Text = planeBoardingA;
-            ratioATB.Text = planeBoardingARatio;
-
-            boardingBTB.Text = planeBoardingB;
-            ratioBTB.Text = planeBoardingBRatio;
-
-            boardingCTB.Text = planeBoardingC;
-            ratioCTB.Text = planeBoardingCRatio;
-
-            boardingDTB.Text = planeBoardingD;
-            ratioDTB.Text = planeBoardingDRatio;
+            
         }
 
-        private void setComboBoxData(string curAirlineId, string curDepId, string curArrId)
+        private void setComboBoxData(string curAirlineId, string curDepId, string curArrId, string curPlaneId)
         {
             int index = 0;
 
@@ -110,6 +83,41 @@ namespace AirTicket
 
                 if (id == curAirlineId) { airlineCB.SelectedIndex = index; }
                 index++;
+            }
+            index = 0;
+
+            OleDbDataReader planes = db.Select("SELECT * FROM Planes WHERE airline_id = " + curAirlineId);
+            while (planes.Read())
+            {
+                string planeId = planes.GetValue(0) + ". Количество мест",
+                       addString = "";
+
+                addString += "1-Класс: " + planes.GetValue(2);
+                addString += ", Бизнес: " + planes.GetValue(4);
+                addString += ", Комфорт: " + planes.GetValue(6);
+                addString += ", Эконом: " + planes.GetValue(8);
+
+                planeCB.Items.Add(new CBData { Id = planeId, Name = addString });
+
+                if (planes.GetValue(0) + "" == curPlaneId) { planeCB.SelectedIndex = index; }
+                index++;
+            }
+        }
+        
+        private void updatePlanes(string airlineId)
+        {
+            OleDbDataReader planes = db.Select("SELECT * FROM Planes WHERE airline_id = " + airlineId);
+            while (planes.Read())
+            {
+                string planeId = planes.GetValue(0) + ". Количество мест",
+                       addString = "";
+
+                addString += "1-Класс: " + planes.GetValue(2);
+                addString += ", Бизнес: " + planes.GetValue(4);
+                addString += ", Комфорт: " + planes.GetValue(6);
+                addString += ", Эконом: " + planes.GetValue(8);
+
+                planeCB.Items.Add(new CBData { Id = planeId, Name = addString });
             }
         }
 
@@ -159,10 +167,24 @@ namespace AirTicket
             return values;
         }
 
-        private void goBackBtn_Click(object sender, RoutedEventArgs e)
+        private static bool isValidTimeFormat(string val)
         {
-            NavigationService.GoBack();
+            // Регулярное выражение для проверки формата времени HH:mm:ss
+            string pattern = @"^(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(val);
         }
+
+        public static bool isValidDateFormat(string val)
+        {
+            // Регулярное выражение для проверки формата даты DD.MM.YYYY
+            string pattern = @"^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$";
+            Regex regex = new Regex(pattern);
+
+            return regex.IsMatch(val);
+        }
+
 
         private void changeFlight_Click(object sender, RoutedEventArgs e)
         {
@@ -171,7 +193,57 @@ namespace AirTicket
                        MessageBoxButton.YesNo,
                        MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                MessageBox.Show("pass");
+                List<string> values = new List<string>();
+
+                string placeDepId = placeDepCB.Text.Split('-')[0].Split(' ')[0],
+                       placeArrId = placeArrCB.Text.Split('-')[0].Split(' ')[0],
+
+                       flightDate = flightDateDP.Text,
+                       flightTime = flightTimeTB.Text,
+
+                       planeId = planeCB.Text.Split('.')[0];
+
+
+                bool allValid = true;
+
+                if (!isValidTimeFormat(flightTime))
+                {
+                    MessageBox.Show("Введите время в формате 00:00:00");
+                    allValid = false;
+                }
+                if (!isValidDateFormat(flightDate))
+                {
+                    MessageBox.Show("Введите дату в формате 00.00.0000");
+                    allValid = false;
+                }
+
+                if (allValid)
+                {
+                    string SQLchangeFlights = "UPDATE Flights SET " +
+                                                "plane_id = " + planeId + ", " +
+                                                "flight_date = '" + flightDate+ "', " +
+                                                "place_departurete = " + placeDepId + ", " +
+                                                "place_arrival = " + placeArrId + ", " +
+                                                "flight_time = '" + flightTime + "' " +
+                                              "WHERE flight_id = " + flightId;
+
+                    db.Select(SQLchangeFlights);
+                }
+            }
+        }
+        
+        private void goBackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+
+        private void airlineCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectionCounter++;
+            if (selectionCounter > 1)
+            {
+                updatePlanes(airlineCB.Text.Split('-')[0].Split(' ')[0]);
             }
         }
     }

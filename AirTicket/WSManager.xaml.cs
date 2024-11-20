@@ -94,7 +94,7 @@ namespace AirTicket
 
                 string flightId = data.GetValue(0) + "",
                        flight = depCity + " - " + arrCity,
-                       depTime = "Вылет: " + gm.getDate(data.GetValue(3) + "") + " - " + gm.getDate(data.GetValue(4) + ""),
+                       depTime = "Вылет: " + gm.getDate(data.GetValue(3) + "") + " - " + gm.getTime(data.GetValue(4) + ""),
                        flightTime = "Примерное время в пути - " + gm.calcTravelTime(dcx, dcy, acx, acy),
                        airlineName = "Авиакомпания: " + data.GetValue(5),
                        boardingA = "1-Класс: " + data.GetValue(6),
@@ -174,6 +174,11 @@ namespace AirTicket
                 string flightId = selectedItem.flightID;
                 NavigationService.Navigate(new pageChangeFlight(flightId));
             }
+        }
+
+        private void addFlightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new pageAddFlight());
         }
     }
 }

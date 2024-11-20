@@ -48,6 +48,6 @@
 
         <Button x:Name="filteringTickets" Content="Поиск" HorizontalAlignment="Left" Height="30" Margin="10,300,0,0" VerticalAlignment="Top" Width="200" Click="filteringTickets_Click"/>
         <Button x:Name="clearForm" Content="Отчистить" HorizontalAlignment="Left" Height="30" Margin="260,300,0,0" VerticalAlignment="Top" Width="100" Click="clearForm_Click"/>
-        <Button Content="Добавить новый рейс" HorizontalAlignment="Left" Margin="10,624,0,0" VerticalAlignment="Top" Width="200" Height="40"/>
+        <Button x:Name="addFlightBtn" Content="Добавить новый рейс" HorizontalAlignment="Left" Margin="10,624,0,0" VerticalAlignment="Top" Width="200" Height="40" Click="addFlightBtn_Click"/>
     </Grid>
 </Page>
